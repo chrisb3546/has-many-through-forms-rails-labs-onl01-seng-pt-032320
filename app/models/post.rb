@@ -5,4 +5,14 @@ class Post < ActiveRecord::Base
   has_many :users, through: :comments
 
 
+  def categories_attributes=(categories_attributes)
+    categories_attributes.values.each do |a|
+      if a["name"].present?
+        category = Category.find_or_create_by(a)
+        self.categories << category
+      end
+    end
+  end
+
+
 end
